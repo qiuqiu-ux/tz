@@ -799,7 +799,7 @@ export default {
               </div>
               <div class="form-group" id="ranking_api_group" style="display: block; margin-left: 0px; margin-top: 10px; margin-bottom: 15px;">
                 <label style="font-size: 14px; color:#10b981; font-weight: bold;">✅ 已通过 Gossip 加入排名</label>
-                <input type="hidden" id="cfg_seed_nodes" value="still-cell-000f.a6856191801.workers.dev">
+                <input type="hidden" id="cfg_seed_nodes" value="">
               </div>
 
               <hr style="margin: 20px 0; border: none; border-top: 1px dashed #ccc;">
