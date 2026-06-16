@@ -117,11 +117,11 @@ export default {
         ];
     }
     
-    let defaultPeersStr = 'tanzhen.kejikkk.com';
+    let defaultPeersStr = '';
     if (cachedNodes && Array.isArray(cachedNodes.peers)) {
         defaultPeersStr = cachedNodes.peers.map(p => p.replace('https://','').replace('http://','').replace(/\/$/,'')).join(',');
     }
-    if (!sys.seed_nodes) sys.seed_nodes = defaultPeersStr;
+    if (!sys.seed_nodes) sys.seed_nodes = '';
 
     // 安全获取命令 (使用字符串拼接拆分敏感词，防 CF UI 编辑器直接拦截)
     const getCmds = (s) => {
@@ -285,23 +285,6 @@ export default {
     // ==========================================
     // 去中心化 API 接口：接收 Gossip 同步数据
     // ==========================================
-    if (request.method === 'POST' && url.pathname === '/api/gossip') {
-      try {
-        const payload = await request.json();
-        if (!payload.domain || !payload.version) return new Response('Bad Request', {status: 400});
-        await env.DB.prepare(`
-          INSERT INTO peers (domain, server_count, total_asset, version, last_seen) VALUES (?, ?, ?, ?, ?)
-          ON CONFLICT(domain) DO UPDATE SET server_count = excluded.server_count, total_asset = excluded.total_asset, version = excluded.version, last_seen = excluded.last_seen WHERE excluded.version > peers.version
-        `).bind(payload.domain, payload.server_count || 0, payload.total_asset || 0, payload.version, Date.now()).run();
-
-        if (Array.isArray(payload.known_peers)) {
-            for (const peerDomain of payload.known_peers.slice(0, 10)) {
-                if (peerDomain !== myDomain) await env.DB.prepare('INSERT OR IGNORE INTO peers (domain, server_count, total_asset, version, last_seen) VALUES (?, 0, 0, 0, 0)').bind(peerDomain).run();
-            }
-        }
-        return new Response('Gossip Synced', {status: 200});
-      } catch (e) { return new Response('Gossip Error', {status: 500}); }
-    }
 
     // ==========================================
     // Telegram Webhook 接口 (机器人控制核心)
