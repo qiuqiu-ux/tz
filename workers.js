@@ -121,7 +121,7 @@ export default {
     if (cachedNodes && Array.isArray(cachedNodes.peers)) {
         defaultPeersStr = cachedNodes.peers.map(p => p.replace('https://','').replace('http://','').replace(/\/$/,'')).join(',');
     }
-    if (!sys。seed_nodes) sys。seed_nodes = '';
+    if (!sys.seed_nodes) sys.seed_nodes = '';
 
     // 安全获取命令 (使用字符串拼接拆分敏感词，防 CF UI 编辑器直接拦截)
     const getCmds = (s) => {
@@ -1995,7 +1995,7 @@ rm -f /tmp/cf_install.sh
            const nowMs = Date.now();
            await env.DB.prepare("DELETE FROM peers WHERE last_seen < ? AND last_seen > 0").bind(nowMs - 86400000).run();
 
-           let seedList = sys.seed_nodes ? sys。seed_nodes。split(',').map(s => s.trim()).filter(s => s) : [];
+           let seedList = sys.seed_nodes ? sys.seed_nodes。split(',').map(s => s.trim()).filter(s => s) : [];
            
            let { results: dbPeers } = await env.DB.prepare('SELECT domain FROM peers WHERE domain != ? ORDER BY RANDOM() LIMIT 3').bind(myDomain).all();
            let targetDomains = dbPeers.map(p => p.domain);
