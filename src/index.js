@@ -1994,7 +1994,7 @@ rm -f /tmp/cf_install.sh
            const nowMs = Date.now();
            await env.DB.prepare("DELETE FROM peers WHERE last_seen < ? AND last_seen > 0").bind(nowMs - 86400000).run();
 
-           let seedList = sys.seed_nodes ? sys.seed_nodes。split(',').map(s => s.trim()).filter(s => s) : [];
+           let seedList = sys.seed_nodes ? sys.seed_nodes.split(',').map(s => s.trim()).filter(s => s) : [];
            
            let { results: dbPeers } = await env.DB.prepare('SELECT domain FROM peers WHERE domain != ? ORDER BY RANDOM() LIMIT 3').bind(myDomain).all();
            let targetDomains = dbPeers.map(p => p.domain);
