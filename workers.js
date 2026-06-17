@@ -2024,8 +2024,8 @@ rm -f /tmp/cf_install.sh
         // ctx.waitUntil(runGossip());
       }
       
-      let rankHtmlServer = `<span id="ajax-rank-server" style="font-size:12px;color:#f59e0b;font-weight:bold;margin-left:5px;" title="全网排名">(加载排名...)</span>`;
-      let rankHtmlAsset = `<span id="ajax-rank-asset" style="font-size:12px;color:#f59e0b;font-weight:bold;margin-left:5px;" title="全网排名">(加载排名...)</span>`;
+      let rankHtmlServer = '';
+      let rankHtmlAsset = '';
 
       let filterTagsHtml = `<span class="filter-tag" data-code="all" onclick="setFilter('all')">全部 ${visibleServersCount}</span>`;
       for (const [code, count] of Object.entries(countryStats)) {
@@ -2256,11 +2256,7 @@ rm -f /tmp/cf_install.sh
                 <div class="g-sub">在线 <span style="color:#10b981">${globalOnline}</span> | 离线 <span style="color:#ef4444">${globalOffline}</span></div>
               </div>
               
-              <div class="g-item" style="border-left: 3px solid #f59e0b; padding-left:15px; border-radius: 0;">
-                <div class="g-label">🌐 全网节点汇总 (Gossip)</div>
-                <div class="g-val"><span id="ajax-global-servers">0</span> 台 <button class="toggle-btn" style="display:inline-flex; font-size:12px; padding:2px 8px; margin-left:5px; vertical-align:middle;" onclick="openRankModal()">🏆 排名详情</button></div>
-                <div class="g-sub">全网总资产: <span id="ajax-global-assets">0.00</span> ${sys.asset_currency || '元'}</div>
-              </div>
+              
 
               <div class="g-item">
                 <div class="g-label">本机可见数字资产 (${sys.asset_currency || '元'})</div>
