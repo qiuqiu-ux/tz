@@ -253,22 +253,14 @@ export default {
     // 内部排行 API (/api/rank)
     // ==========================================
     if (request.method === 'GET' && url.pathname === '/api/rank') {
-      try {
-        const nowMs = Date.now();
-        await env.DB.prepare("DELETE FROM peers WHERE last_seen < ? AND last_seen > 0").bind(nowMs - 86400000).run();
-        const { results: rankData } = await env.DB.prepare('SELECT domain, server_count as servers, total_asset as assets, last_seen FROM peers ORDER BY total_asset DESC, server_count DESC LIMIT 100').all();
-        
-        let asset_rank = 0; let server_rank = 0; let global_servers = 0; let global_assets = 0;
-        rankData.forEach(r => { global_servers += parseInt(r.servers) || 0; global_assets += parseFloat(r.assets) || 0; });
-
-        const sortedByAsset = [...rankData].sort((a,b) => b.assets - a.assets);
-        const sortedByServer = [...rankData].sort((a,b) => b.servers - a.servers);
-        asset_rank = sortedByAsset.findIndex(r => r.domain === myDomain) + 1;
-        server_rank = sortedByServer.findIndex(r => r.domain === myDomain) + 1;
-        
-        return new Response(JSON.stringify({ list: rankData, server_rank: server_rank > 0 ? server_rank : '-', asset_rank: asset_rank > 0 ? asset_rank : '-', global_servers: global_servers, global_assets: global_assets, timestamp: nowMs }), { headers: { 'Content-Type': 'application/json' } });
-      } catch(e) { return new Response(JSON.stringify({error: true}), { status: 500 }); }
-    }
+    return Response.json({
+        list: [],
+        server_rank: '-',
+        asset_rank: '-',
+        global_servers: 0,
+        global_assets: 0
+    });
+}
 
     // ==========================================
     // 单个服务器详情 JSON API
@@ -781,7 +773,7 @@ export default {
                 <input type="text" id="cfg_asset_currency" value="${sys.asset_currency || '元'}" style="width: 120px; padding: 6px;">
               </div>
               <div class="form-group" id="ranking_api_group" style="display: block; margin-left: 0px; margin-top: 10px; margin-bottom: 15px;">
-                <label style="font-size: 14px; color:#10b981; font-weight: bold;">✅ 已通过 Gossip 加入排名</label>
+                
                 <input type="hidden" id="cfg_seed_nodes" value="">
               </div>
 
@@ -2028,7 +2020,7 @@ rm -f /tmp/cf_install.sh
               ON CONFLICT(domain) DO UPDATE SET server_count=excluded.server_count, total_asset=excluded.total_asset, version=excluded.version, last_seen=excluded.last_seen
            `).bind(myDomain, totalServersGossip, totalAssetGossip, nowMs, nowMs).run(); 
         };
-        ctx.waitUntil(runGossip());
+        // ctx.waitUntil(runGossip());
       }
       
       let rankHtmlServer = `<span id="ajax-rank-server" style="font-size:12px;color:#f59e0b;font-weight:bold;margin-left:5px;" title="全网排名">(加载排名...)</span>`;
