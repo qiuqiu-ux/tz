@@ -186,8 +186,7 @@ export default {
             <span style="margin-right: 15px;">👁️ 历史总访问：<b style="color: #3b82f6;">${sys.visits_total || 0}</b> 次</span>
             <span>🔥 今日访问：<b style="color: #10b981;">${sys.visits_today || 0}</b> 次</span>
         </div>
-        Powered by <a href="https://github.com/a63414262/CF-Server-Monitor-Pro" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;">CF-Server-Monitor-Pro (Gossip Edition)</a> | 
-        <a href="https://www.youtube.com/@%E7%A7%91%E6%8A%80KKK" target="_blank" style="color: #ef4444; text-decoration: none; font-weight: 600;">▶️ 小K分享频道</a>
+        
       </div>
     `;
 
@@ -2229,7 +2228,7 @@ rm -f /tmp/cf_install.sh
             
             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
               <div class="view-controls">
-                <button class="toggle-btn" onclick="openRankModal()">🏆 Gossip 全网排行</button>
+                
                 <button class="toggle-btn active" id="btn-card" onclick="switchView('card')">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> 卡片
                 </button>
@@ -2298,19 +2297,7 @@ rm -f /tmp/cf_install.sh
             <div id="map-container"></div>
           </div>
           
-          <div id="rankModal" class="modal">
-            <div class="modal-content" style="max-width: 800px;">
-               <h3 style="margin-top:0; color:#f59e0b;">🏆 去中心化网络 (Gossip) 资产与探针排行</h3>
-               <p style="font-size:12px; color:#888; margin-bottom:20px;">* 数据由分布在各地的 Cloudflare Workers 节点通过弱共识自主计算得出。<br>当前全网共记录互联 VPS <b id="modal-global-servers" style="color:#3b82f6;">0</b> 台，汇总资产总额 <b id="modal-global-assets" style="color:#10b981;">0</b>。</p>
-               <div class="table-responsive">
-                 <table class="custom-table">
-                   <thead><tr><th>排名</th><th>网络节点 (Domain)</th><th>VPS 数量</th><th>探针总资产</th><th>最后活跃</th></tr></thead>
-                   <tbody id="rank-tbody"><tr><td colspan="5" style="text-align:center;">加载中...</td></tr></tbody>
-                 </table>
-               </div>
-               <div style="text-align:right; margin-top:20px;"><button onclick="closeRankModal()" class="btn btn-gray" style="padding: 8px 20px;">关闭</button></div>
-            </div>
-          </div>
+          
           
           ${sys.enable_popup === 'true' ? `
           <div id="welcome-popup" class="modal" style="z-index: 9999;">
