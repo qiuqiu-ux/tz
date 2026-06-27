@@ -185,7 +185,9 @@ export default {
         <div style="margin-bottom: 8px;">
             <span style="margin-right: 15px;">👁️ 历史总访问：<b style="color: #3b82f6;">${sys.visits_total || 0}</b> 次</span>
             <span>🔥 今日访问：<b style="color: #10b981;">${sys.visits_today || 0}</b> 次</span>
-      
+              </div>
+        
+      </div>
     `;
 
     const currentThemeObj = availableThemes.find(t => t.id === sys.theme) || availableThemes[0];
